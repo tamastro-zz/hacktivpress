@@ -1,4 +1,4 @@
-const users = require('../models/users');
+const users = require('../models/user');
 const random = require('../helpers/hash')
 const jwt = require('jsonwebtoken');
 const dotenv = require('dotenv').config()
