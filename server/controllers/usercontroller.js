@@ -19,7 +19,7 @@ exports.signin = (req, res) => {
   users.findOne({
     username: req.body.username
   })
-    .then(data => {
+    .then(data => {   
       pass = random.hashish(req.body.password, data.salt)
       if (pass == data.password) {
         jwt.sign({

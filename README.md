@@ -28,9 +28,9 @@ npm start
 
 | Route 	| HTTP 	| Description 	|
 |-------	|------	|-------------	|
-|       	|      	|             	|
-|       	|      	|             	|
-|       	|      	|             	|
+|    /users   	|   GET   	|    Get list of users         	|
+|   /users/signin    	|  POST    	|    Login user         	|
+|     /users/signup  	|  POST    	|  Register new user           	|
 |       	|      	|             	|
 |       	|      	|             	|
 |       	|      	|             	|
