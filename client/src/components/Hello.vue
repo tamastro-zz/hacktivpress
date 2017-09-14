@@ -43,7 +43,7 @@
 
 
 
-    <div class="ui modal">
+    <div class="ui modal" id="add">
       <i class="close icon"></i>
       <div class="header">
         Add Blog
@@ -79,7 +79,7 @@
     </div>
 
 
-    <div class="ui modal edit">
+    <div class="ui modal" id="edit">
       <i class="close icon"></i>
       <div class="header">
         Edit Blog
@@ -135,13 +135,13 @@
     },
     methods: {
       showmodal() {
-        $('.ui.modal')
+        $('#add')
           .modal('show');
       },
       showeditmodal(blog) {
         console.log(blog);
         this.blogedit = blog
-        $('.ui.modal.edit')
+        $('#edit')
           .modal('show');
       },
       editBlog() {

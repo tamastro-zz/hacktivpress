@@ -1,12 +1,12 @@
 <template>
   <div id="app">
     
-  <div class="ui secondary pointing menu">
+  <div class="ui secondary pointing menu" v-if="$route.path !== '/'">
     <a class="item active">
       Home
     </a>
     <div class="right menu">
-      <a class="ui item">
+      <a class="ui item" @click="logout">
         Logout
       </a>
     </div>
@@ -20,7 +20,13 @@
 
 <script>
 export default {
-  name: 'app'
+  name: 'app',
+  methods: {
+    logout() {
+      this.$router.push('/')
+      window.localStorage.clear()
+    }
+  }
 }
 </script>
 
