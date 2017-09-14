@@ -3,6 +3,7 @@ const jwt = require('jsonwebtoken');
 
 exports.getbloglist = (req, res) => {
   blog.find()
+  .populate('author')
   .then(data => {
     res.send(data)
   })
@@ -23,8 +24,11 @@ exports.postblog = (req, res) => {
 }
 
 exports.editblog = (req, res) => {
+  var token = req.headers.token
+  var decode = jwt.verify(token, process.env.SECRET)
   blog.updateOne({
-    _id: req.params.id
+    _id: req.params.id,
+    author: decode.id
   }, {
     $set: req.body
   })
@@ -34,10 +38,13 @@ exports.editblog = (req, res) => {
 }
 
 exports.deleteblog = (req, res) => {
-  blog.deleteOne({
-    _id: req.params.id
-  })
-  .then(data => {
-    req.send(data)
-  })
+  var token = req.headers.token
+  var decode = jwt.verify(token, process.env.SECRET)
+  question.deleteOne({
+      _id: req.params.id,
+      author: decode.id
+    })
+    .then(data => {
+      res.send(data)
+    })
 }
