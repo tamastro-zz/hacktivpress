@@ -40,7 +40,7 @@ exports.editblog = (req, res) => {
 exports.deleteblog = (req, res) => {
   var token = req.headers.token
   var decode = jwt.verify(token, process.env.SECRET)
-  question.deleteOne({
+  blog.deleteOne({
       _id: req.params.id,
       author: decode.id
     })

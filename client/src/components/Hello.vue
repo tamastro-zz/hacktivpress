@@ -20,7 +20,7 @@
           <i class="trash icon"></i>
         </button>
 
-        <button class="ui icon right floated button" v-if="blog.author._id == user.id">
+        <button class="ui icon right floated button" v-if="blog.author._id == user.id" @click="showeditmodal(blog)">
            <i class="pencil icon"></i>
         </button>
         <h5>{{blog.author.username.toUpperCase()}}</h5>
@@ -46,7 +46,7 @@
     <div class="ui modal">
       <i class="close icon"></i>
       <div class="header">
-        Add Task
+        Add Blog
       </div>
       <div class="content">
 
@@ -79,12 +79,49 @@
     </div>
 
 
+    <div class="ui modal edit">
+      <i class="close icon"></i>
+      <div class="header">
+        Edit Blog
+      </div>
+      <div class="content">
+
+        <form class="ui form">
+          <div class="field">
+            <label>Title</label>
+            <input type="text" name="title" placeholder="Blog Title..." v-model="blogedit.title">
+          </div>
+          <div class="field">
+            <label>Content</label>
+            <textarea v-model="blogedit.content"></textarea>
+          </div>
+
+          <div class="field">
+            <label>Category</label>
+            <input type="text" name="category" placeholder="Category" v-model="blogedit.category">
+          </div>
+        </form>
+
+      </div>
+      <div class="actions">
+        <div class="ui black deny button">
+          Cancel
+        </div>
+        <div class="ui positive right labeled icon button" @click="editblog">
+          Submit
+          <i class="add square icon"></i>
+        </div>
+      </div>
+    </div>
+
+
+
 
   </div>
 </template>
 
 <script>
-import jwtdecode from 'jwt-decode'
+  import jwtdecode from 'jwt-decode'
   export default {
     name: 'hello',
     data() {
@@ -92,13 +129,30 @@ import jwtdecode from 'jwt-decode'
         blogs: [],
         title: '',
         content: '',
-        category: ''
+        category: '',
+        blogedit: {}
       }
     },
     methods: {
       showmodal() {
         $('.ui.modal')
           .modal('show');
+      },
+      showeditmodal(blog) {
+        console.log(blog);
+        this.blogedit = blog
+        $('.ui.modal.edit')
+          .modal('show');
+      },
+      editBlog() {
+        this.$http.put({
+          title: this.blogedit.title,
+          content: this.blogedit.content,
+          category: this.blogedit.category
+        })
+        .then(data => {
+          this.getblogs()
+        })
       },
       getblogs() {
         this.$http.get('/blog', {
@@ -108,6 +162,7 @@ import jwtdecode from 'jwt-decode'
           })
           .then(response => {
             this.blogs = response.data
+            this.blogedit = {}
           })
       },
       postblog() {
@@ -133,21 +188,19 @@ import jwtdecode from 'jwt-decode'
       },
       deleteblog(id) {
         this.$http.delete(`/blog/${id}`, {
-          text: ''
-        }, {
-          headers: {
-            token: window.localStorage.getItem('token')
-          }
-        })
-        .then(data => {
-          this.getblogs()
-        })
+            headers: {
+              token: window.localStorage.getItem('token')
+            }
+          })
+          .then(data => {
+            this.getblogs()
+          })
       }
     },
     computed: {
-     user() {
-       return this.$store.state.user
-     }
+      user() {
+        return this.$store.state.user
+      }
     },
     created() {
       this.getblogs()
