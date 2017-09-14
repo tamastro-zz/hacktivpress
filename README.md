@@ -31,9 +31,10 @@ npm start
 |    /users   	|   GET   	|    Get list of users         	|
 |   /users/signin    	|  POST    	|    Login user         	|
 |     /users/signup  	|  POST    	|  Register new user           	|
-|       	|      	|             	|
-|       	|      	|             	|
-|       	|      	|             	|
+|    /blog   	|   GET   	|         Get list of Blogs    	|
+|    /blog   	|   POST   	|     Post new Blog        	|
+|   /blog/:id    	|   PUT   	|    Edit particular blog post  |
+|/blog/:id| DELETE| Delete particular blog post
 
 
 
